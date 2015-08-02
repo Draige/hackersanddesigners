@@ -1,70 +1,76 @@
-int anPin0 = A0;
-int sensorValue0 = 0;
+// Assign Arduino Pins
+//Sonar Pins
+int echoPin =3; 
+int trigPin =4; 
 
-//Sonar 1 
-int echoPin1 =3; 
-int trigPin1 =2; 
-int distance1 =0; 
-
-int thres0min = 900;
-int thres0max = 1200;
+// Assign varibles
+int distance = 0; 
+int thresMin = 0;
+int thresMax = 40;
 
 int ledPin = 13;
 
 void setup() {
   Serial.begin(9600);
-  pinMode(anPin0, INPUT);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
   pinMode(ledPin, OUTPUT);
-  pinMode(trigPin1, OUTPUT);
-  pinMode(echoPin1, INPUT);
 
 }
 
 
 void loop() {
-  readAnalog();
-  delay(30000);
-}
-
-int getDistance (int trigPin1, int echoPin){  digitalWrite(trigPin1, HIGH);
-delayMicroseconds(10);
-digitalWrite(trigPin1, LOW);
-unsigned long pulseTime = pulseIn(echoPin, HIGH);
-int distance = pulseTime/58;
-return distance;
-
-}    
-
-
-void printDistance(int id, int dist){
-  Serial.print(id);
-  if (dist >= 120 || dist <= 0 ){
-    Serial.print(" Out of range ");
-    Serial.flush(); 
-  }else
-    for (int i = 0; i <= dist; i++) {
-    Serial.print("-");
-  }
-  Serial.print(dist);
-  Serial.print(" cm  ");
-  Serial.flush();  
+  readSensor();
+  //delay(30000);
+  delay(300);
 }
 
 
-void readAnalog() {
-  // read the input on analog pin 0:
-  int sensorValue0 = analogRead(anPin0);
-  
-  if (sensorValue0 >= thres0min && sensorValue0 <= thres0max) {
+void readSensor() {
+  distance = getDistance(trigPin, echoPin);
+  // if the distance from the SonarSensor is bigger than "thresMin" AND (&&) smaller than "thresMax"
+  if (distance >= thresMin && distance <= thresMax){
+
+    // set LED (arduino pin 13) HIGH/ON
     digitalWrite (ledPin, HIGH);
-    distance1 = getDistance(trigPin1, echoPin1);
-    printDistance(1, distance1);
-//    connection0 = 1; 
-//    Serial.print(" Hello Vince the Prince, you are a bit close ");
-//    Serial.print(" Hello Vince the Prince ");
-//    Serial.print(sensorValue0);
-//    Serial.flush();
+    Serial.print("Scott, Sit up right!!! ");
+    Serial.print("Your distance to the screen is: ");
+    Serial.print(distance);
+    Serial.print(" cm");
+    Serial.println("");
+    Serial.flush(); 
   } else {
+    // set LED (arduino pin 13) LOW/OFF
     digitalWrite (ledPin, LOW);
   }
 }
+
+
+int getDistance (int trigPin, int echoPin){  digitalWrite(trigPin, HIGH);
+delayMicroseconds(10);
+digitalWrite(trigPin, LOW);
+unsigned long pulseTime = pulseIn(echoPin, HIGH);
+int distance = pulseTime/58;
+return distance;
+} 
+
+
+//void printDistance(int id, int dist){
+//  if (dist >= thresMin && dist <= thresMax){
+//    // Print a "-" for every cm
+//    for (int i = 0; i <= dist; i++) {
+//    Serial.print("-");
+//
+//    // set LED (arduino pin 13) HIGH/ON
+//    digitalWrite (ledPin, HIGH);
+//    Serial.print("Scott, Sit up right!!! ");
+//    Serial.print("Your distance to the screen is: ");
+//    Serial.print(dist);
+//    Serial.print(" cm");
+//    Serial.println("");
+//    Serial.flush(); 
+//  } else {
+//    // set LED (arduino pin 13) LOW/OFF
+//    digitalWrite (ledPin, LOW);
+//  }
+//}
