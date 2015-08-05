@@ -1,0 +1,54 @@
+{
+  "url": "\/opt\/lampp\/htdocs\/func\/upload\/images\/obama.jpg",
+  "face_detection": [{
+    "boundingbox": {
+      "tl": {
+        "x": 167.69,
+        "y": 46.15
+      },
+      "size": {
+        "width": 140,
+        "height": 140
+      }
+    },
+    "confidence": 1,
+    "eye_left": {
+      "x": 211.7,
+      "y": 105.8
+    },
+    "eye_right": {
+      "x": 265.2,
+      "y": 103.5
+    },
+    "nose": {
+      "x": 234,
+      "y": 134.8
+    },
+    "mouth l": {
+      "x": 211.7,
+      "y": 152.6
+    },
+    "mouth_l": {
+      "x": 211.7,
+      "y": 152.6
+    },
+    "mouth r": {
+      "x": 265.2,
+      "y": 152.6
+    },
+    "mouth_r": {
+      "x": 265.2,
+      "y": 152.6
+    },
+    "age": 53.19,
+    "smile": 0.99,
+    "glasses": 0.11,
+    "eye_closed": 0.01,
+    "sex": 0.98
+  }],
+  "usage": {
+    "quota": 39997,
+    "status": "Succeed.",
+    "api_id": "6CxLSODTbw4wmRjG"
+  }
+}

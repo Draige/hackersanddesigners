@@ -4,8 +4,8 @@ int echoPin =3;
 int trigPin =4; 
 
 // Assign varibles
-int thresMax = 100;
-
+int distance = 0;
+int thresMax = 50;
 int trigger = 0;
 
 int ledPin = 13;
@@ -21,7 +21,6 @@ void setup() {
 
 void loop() {
   readSensor();
-  //delay(30000);
   delay(500);
 }
 
@@ -34,13 +33,14 @@ void readSensor() {
     // set LED (arduino pin 13) HIGH/ON
     digitalWrite (ledPin, HIGH);
     //Serial.print("Scott, Sit up right!!! ");
-    Serial.print("Good posture prolongs your lifespan");
+    Serial.print("Good posture prolongs your lifespan. ");
 //    Serial.print("Your distance to the screen is: ");
 //    Serial.print(distance);
 //    Serial.print(" cm");
 //    Serial.println("");
-    Serial.flush(); 
     trigger = 1;
+    Serial.println(trigger);
+    Serial.flush(); 
   }
   
   if (distance >= thresMax && trigger == 1){
@@ -49,7 +49,8 @@ void readSensor() {
     Serial.print("Sitting position neatly adapted, ");
     //Serial.println(distance);
     trigger = 0;
-
+    Serial.println(trigger);
+    Serial.flush();
   }
 }
 
@@ -62,7 +63,9 @@ int distance = pulseTime/58;
 return distance;
 } 
 
-void Random_positive
+void Random_positive(){
+  
+}
 
 //void printDistance(int id, int dist){
 //  if (dist >= thresMin && dist <= thresMax){
