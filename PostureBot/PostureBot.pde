@@ -23,15 +23,27 @@ Rectangle[] faces;
 //create output to txt
 PrintWriter output;
 
-int sizeWidth = 320;
-int sizeHeight = 240;
-int thresholdHeight = 90;
-int thresholdFaceWidth = 100;
+
+
+//BIG
+int sizeWidth = 640;
+int sizeHeight = 480;
+int thresholdHeight = 190;
+int thresholdFaceWidth = 230;
+
+// SMALL
+// int sizeWidth = 320;
+// int sizeHeight = 240;
+// int thresholdHeight = 90;
+// int thresholdFaceWidth = 100;
+
 int trigger = 0;
+
+PFont f;
 
 void setup() {
   size(sizeWidth, sizeHeight,P2D);
-  
+  f = createFont("Arial",16,true);
   // Start capturing
   cam = new Capture(this, sizeWidth, sizeHeight);
   cam.start();
@@ -57,6 +69,7 @@ void captureEvent(Capture cam) {
 void draw() {
   
   background(0);
+  textFont(f,16);
   
   // We have to always "load" the camera image into OpenCV 
   opencv.loadImage(cam);
@@ -66,6 +79,8 @@ void draw() {
   
   // Draw the video
   image(cam, 0, 0);
+  stroke(0,255,0);
+  line(0, (thresholdHeight + 50), sizeWidth, (thresholdHeight + 50));
 
   // If we find faces, draw them!
   if (faces != null) {
@@ -78,10 +93,18 @@ void draw() {
       //println(faces[0].y);
       //println (faces[0].width);
       if (faces[0].y <= thresholdHeight && faces[0].width <= thresholdFaceWidth ) {
-        randomErrorPos();
+        randomErrorPos(); 
       }
       if (faces[0].y >= thresholdHeight || faces[0].width >= thresholdFaceWidth ) {
         randomErrorNeg();
+        if (faces[0].y >= thresholdHeight){
+          fill(255,0,0);
+          text("You are sitting down",10,20);
+        }
+        if (faces[0].width >= thresholdFaceWidth){
+          fill(255,0,0);
+          text("You are to close",10,40);
+        }
       }
     }
 
@@ -130,4 +153,3 @@ void randomErrorNeg() {
   }
   
 }
-
